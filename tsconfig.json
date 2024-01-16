@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "baseUrl": "src",
+    "sourceMap": true,
+    "outDir": "dist",
+    "noImplicitAny": true
+  },
+  "include":["./**/*", "app.ts", "server.ts","./@types/custom.d.ts"]
+}

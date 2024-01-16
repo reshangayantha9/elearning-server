@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comment Replied Notification</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background-color: #3498db;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    p {
+      margin: 10px 0;
+      color: #555;
+    }
+
+    .reply {
+      margin: 15px 0;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .footer {
+      background-color: #f9f9f9;
+      padding: 10px;
+      text-align: center;
+      color: #888;
+    }
+
+    a {
+      color: #3498db;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Comment Replied Notification</h1>
+    </div>
+    <div class="content">
+      <p>Dear <%= name %>,</p>
+      <div class="reply">
+        <p>A new reply has been added o your question in the video <%= title %> . </p>
+        <p>Please login to our website to view the replied and continue the discussion </p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Thank you for being a part of our community!.</p>
+    </div>
+  </div>
+</body>
+</html>
