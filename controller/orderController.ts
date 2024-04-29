@@ -3,13 +3,14 @@ import { CatchAsyncError } from "../Exception/catchAsyncError";
 import ErrorHandler from "../Exception/ErrorHandler";
 import OrderModel, { IOrder } from "../models/orderModel";
 import userModel from "../models/userModel";
-import CourseModel from "../models/courseModel";
+import CourseModel, { ICourse } from "../models/courseModel";
 import path from "path";
 import ejs from "ejs";
 import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notificationModel";
 import { newOrder } from "../services/orderService";
 import { getAllCoursesService } from "../services/courseService";
+import { redis } from "../utils/redis";
 
 //create order
 export const createOrder = CatchAsyncError(
@@ -36,7 +37,7 @@ export const createOrder = CatchAsyncError(
         );
       }
 
-      const course = await CourseModel.findById(courseId);
+      const course:ICourse | null = await CourseModel.findById(courseId);
 
       if (!course) {
         return next(new ErrorHandler("Course not found", 404));
@@ -76,6 +77,7 @@ export const createOrder = CatchAsyncError(
       }
 
       user?.courses.push(course?._id);
+      await redis.set(req.user?._id,JSON.stringify(user))
       await user?.save();
 
       await NotificationModel.create({
@@ -83,7 +85,7 @@ export const createOrder = CatchAsyncError(
         title: "New Order",
         message: `You have a new order from ${course?.name}`,
       });
-      course.purchased ? course.purchased +=1 :course.purchased;
+      course.purchased = course.purchased+ 1;
       await course.save();
       newOrder(data, res, next);
     } catch (error) {
@@ -102,3 +104,17 @@ export const getAllOrders = CatchAsyncError(
     }
   }
 );
+
+export const sendStripePublishableKey=CatchAsyncError(async(req:Request,res:Response)=>{
+  res.status(200).json({
+    // publishableKey:process.env.STRIPE_PUBLISHABLE_KEY
+  })
+})
+
+export const newPayment=CatchAsyncError(async(req:Request,res:Response,next:NextFunction)=>{
+  try {
+    success:true
+  } catch (error) {
+    return next(new ErrorHandler(error.message,500));
+  }
+})
